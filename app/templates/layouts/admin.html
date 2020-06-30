@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <meta name="author" content="Hau Nguyen">
+    <meta name="keywords" content="au theme template">
+
+    <!-- Title Page-->
+    <title>
+        {% if title %}
+            {{title}}
+        {%else%}
+            Administration
+        {%endif%}
+
+    </title>
+
+    {% block css %}
+    {%endblock%}
+   
+
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- MENU SIDEBAR-->
+        {% block sidebarleft %}
+        {%endblock%}
+        <!-- END MENU SIDEBAR-->
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container2">
+            <!-- HEADER DESKTOP-->
+            {% block header %}
+
+            {%endblock%}
+
+            <!-- END HEADER DESKTOP-->
+
+            <!-- BREADCRUMB-->
+            {% block body %}
+
+            {%endblock%}
+            
+
+            {% block footer %}
+
+            {%endblock%}
+
+            <!-- END PAGE CONTAINER-->
+        </div>
+
+    </div>
+
+    <!-- Jquery JS-->
+    {% block js %}
+    {%endblock%}
+   
+</body>
+
+</html>
+<!-- end document-->

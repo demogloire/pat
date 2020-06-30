@@ -1,0 +1,176 @@
+{% extends 'layouts/admin.html' %}
+
+{% block css %}
+{% include 'elements/components/css.html'%}
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+{%endblock%}
+
+{% block sidebarleft %}
+{% include 'elements/admin/sidebar_left.html' %}
+{%endblock%}
+
+{% block header %}
+{% include 'elements/admin/header.html' %}
+{%endblock%}
+
+{% block body %}
+
+<section class="au-breadcrumb m-t-75">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="au-breadcrumb-content">
+                        <div class="au-breadcrumb-left">
+                           
+                            <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                <li class="list-inline-item active">
+                                    <a href="{{url_for('user.index')}}">Utilisateur</a>
+                                </li>
+                                <li class="list-inline-item seprate">
+                                    <span>/</span>
+                                </li>
+                                <li class="list-inline-item">Editer utilisateur</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="col-lg-9" id="formEditUser">
+    <h2>Modification utilisateur</h2>
+    <div class="card">
+        <div class="card-body box-shadow--3dp">
+            <form action="" method="post" novalidate="novalidate">
+                {{ form.csrf_token }}
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            {% if form.nom.errors %}
+                            {{ form.nom(class="form-control is-invalid", placeholder="Nom")}}
+                            <i class="form-group__bar"></i>
+                            <div class="invalid-feedback">
+                                {% for error in form.nom.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.nom(class="form-control", placeholder="Nom")}}
+                            <i class="form-group__bar"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            {% if form.post_nom.errors %}
+                            {{ form.post_nom(class="form-control is-invalid", placeholder="Post-nom")}}
+                            <i class="form-group__bar"></i>
+                            <div class="invalid-feedback">
+                                {% for error in form.post_nom.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.post_nom(class="form-control", placeholder="Post-nom")}}
+                            <i class="form-group__bar"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {% if form.prenom.errors %}
+                            {{ form.prenom(class="form-control is-invalid", placeholder="Prénom")}}
+                            <i class="form-group__bar"></i>
+                            <div class="invalid-feedback">
+                                {% for error in form.prenom.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.prenom(class="form-control", placeholder="Prénom")}}
+                            <i class="form-group__bar"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {% if form.username.errors %}
+                            {{ form.username(class="form-control is-invalid", placeholder="E-mail")}}
+                            <i class="form-group__bar"></i>
+                            <div class="invalid-feedback">
+                                {% for error in form.username.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.username(class="form-control", placeholder="E-mail")}}
+                            <i class="form-group__bar"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {% if form.role.errors %}
+                            {{ form.role(class="form-control is-invalid")}}
+                            <i class="form-group__bar"></i>
+                            <div class="invalid-feedback">
+                                {% for error in form.role.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.role(class="form-control")}}
+                            <i class="form-group__bar"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button id="submit" name="submit" type="submit"
+                        class="btn btn-outline-success">Enregister</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div style="height: 200px;"></div>
+
+<style>
+    #formEditUser{
+        margin-top: 30px;
+    }
+    #formEditUser h2{
+        margin-bottom: 20px;
+    }
+</style>
+
+
+{%endblock%}
+
+
+{% block footer %}
+{% include 'elements/admin/footer.html' %}
+{%endblock%}
+
+{% block js %}
+{% include 'elements/components/js.html'%}
+
+
+
+
+{%endblock%}

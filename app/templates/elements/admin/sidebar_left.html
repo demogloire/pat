@@ -1,0 +1,99 @@
+<aside class="menu-sidebar2">
+    <div class="logo">
+        <a href="#">
+            <img src="/static/admin/images/icon/logo-white.png" alt="Cool Admin">
+        </a>
+    </div>
+    <div class="menu-sidebar2__content js-scrollbar1 ps">
+        <div class="account2">
+            <div class="image img-cir img-120">
+                <img src="{{url_for('static', filename='image/{}'.format(current_user.avatar))}}    " alt="John Doe">
+            </div>
+            <h4 class="name">{{current_user.prenom}}</h4>
+            <a href=" {{url_for('auth.logout')}} ">Déconnexion</a>
+        </div>
+        <nav class="navbar-sidebar2">
+            <ul class="list-unstyled navbar__list">
+                <li>
+                    <a href="{{url_for('main.main')}}">
+                        <i class="fas fa-chart-bar"></i>Dashboard</a>
+                </li>
+
+                <li class="has-sub">
+                    <a class="js-arrow" href="#">
+                        <i class="fas fa-shopping-cart"></i>Commande
+                        <span class="arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </span>
+                    </a>
+                    <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none;">
+                        <li>
+                            <a href="index.html">
+                                <i class="fas fa-shopping-cart"></i> Commandes</a>
+                        </li>
+                        <li>
+                            <a href="index2.html">
+                                <i class="fas fa-credit-card"></i>Payements</a>
+                        </li>
+                        <li>
+                            <a href="index3.html">
+                                <i class="fas fa-file"></i>Rapports</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="has-sub">
+                    <a class="js-arrow" href="#">
+                        <i class="fas fa-archive"></i>Produit
+                        <span class="arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </span>
+                    </a>
+                    <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none;">
+                        <li>
+                            <a href="{{url_for('produit.index')}}">
+                                <i class="fas fa-archive"></i> Produits</a>
+                        </li>
+                        <li>
+                            <a href="{{url_for('categorie.index')}}">
+                                <i class="fas  fa-th"></i>Categories</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="has-sub">
+                    <a class="js-arrow" href="#">
+                        <i class="fas fa-usd"></i>Depense
+                        <span class="arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </span>
+                    </a>
+                    <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none;">
+                        <li>
+                            <a href="{{url_for('produit.index')}}">
+                                <i class="fas fa-folder"></i> Comptes</a>
+                        </li>
+                        <li>
+                            <a href="{{url_for('categorie.index')}}">
+                                <i class="fas fa-usd"></i>Depenses</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="{{url_for('main.main')}}">
+                        <i class="fas fa-users"></i>Clients</a>
+                </li>
+                <li>
+                    <a href="{{url_for('main.main')}}">
+                        <i class="fas fa-folder-open"></i>Resultat</a>
+                </li>
+
+                <li>
+                    <a href="{{url_for('user.index')}}">
+                        <i class="fas fa-user"></i>Utilisateurs</a>
+                </li>
+            </ul>
+        </nav>
+    <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+</aside>

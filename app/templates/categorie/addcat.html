@@ -1,0 +1,210 @@
+{% extends 'layouts/admin.html' %}
+
+{% block css %}
+{% include 'elements/components/css.html'%}
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+<link href="{{url_for('static', filename='admin/vendor/select2/select2.min.css')}}" rel="stylesheet" media="all">
+
+
+{%endblock%}
+
+{% block sidebarleft %}
+{% include 'elements/admin/sidebar_left.html' %}
+{%endblock%}
+
+{% block header %}
+{% include 'elements/admin/header.html' %}
+{%endblock%}
+
+{% block body %}
+
+<section class="au-breadcrumb m-t-75">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="au-breadcrumb-content">
+                        <div class="au-breadcrumb-left">
+                            <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                <li class="list-inline-item active">
+                                    <a href="{{url_for('main.main')}}">Dashboard</a>
+                                </li>
+                                <li class="list-inline-item seprate">
+                                    <span>/</span>
+                                </li>
+                                <li class="list-inline-item">Liste des catégories</li>
+                            </ul>
+                        </div>                                                                  
+                        <button type="button" class="btn btn-primary mb-1" data-toggle="modal"
+                            data-target="#largeModal">
+                            <i class="fas fa-th"></i>  Ajouter Catégorie
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- USER DATA-->
+                    <div class="user-data m-b-30">
+                        <h3 class="title-3 m-b-30">
+                            <i class="fas fa-th"></i>Catégorie des produits</h3>
+                        
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {% with messages= get_flashed_messages(with_categories=true) %}
+                                    {% if messages  %}
+                                    {% for category, message in messages %}
+                                    <div class="alert text-center alert-{{ category }}">
+                                        <b>{{ message }}</b>
+                                    </div>
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endwith %}
+                                </div>
+                            </div>
+                            
+                        <div class="table-responsive table-data">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td>No</td>
+                                        <td>Catégorie</td>
+                                        <td>Produit associé</td>
+                                        <td>Statut</td>
+                                        <td>Action</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {%for cat in categorie%}
+                                    <tr>
+                                        <td>
+                                            <div class="table-data__info">
+                                                <h6>{{loop.index}}</h6>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {{cat.nom}}
+                                        </td>
+                                        <td>
+                                            {{cat.relation_produit}}
+                                        </td>
+                                        <td>
+
+                                            {%if cat.statut == True%}
+                                            <a href="{{url_for('categorie.acivation_categorie', id=cat.id)}}"
+                                                class="btn btn-outline-primary btn-sm" data-toggle="tooltip"
+                                                data-placement="top" title="Active">
+                                                <i class="zmdi zmdi-check"></i>
+                                            </a>
+                                            {%else%}
+                                            <a href="{{url_for('categorie.acivation_categorie', id=cat.id)}}"
+                                                class="btn btn-sm btn-outline-danger" data-toggle="tooltip"
+                                                data-placement="top" title="Inactive">
+                                                <i class="zmdi zmdi-close"></i>
+                                            </a>
+
+
+                                            {%endif%}
+                                        </td>
+                                        <td>
+                                            <a href="{{url_for('categorie.modification_categorie', id=cat.id)}}"
+                                                class="btn btn-outline-primary btn-sm" data-toggle="tooltip"
+                                                data-placement="top" title="Editer">
+                                                <i class="zmdi zmdi-edit"></i>
+                                            </a>
+                                            <a href="{{url_for('categorie.acivation_categorie', id=cat.id)}}"
+                                                class="btn btn-outline-primary btn-sm" data-toggle="tooltip"
+                                                data-placement="top" title="Desactive">
+                                                <i class="zmdi zmdi-view-agenda"></i>
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                    {%endfor%}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END USER DATA-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{%endblock%}
+
+
+{% block footer %}
+{% include 'elements/admin/footer.html' %}
+{%endblock%}
+
+{% block js %}
+
+{% include 'elements/components/js.html'%}
+
+
+
+<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="largeModalLabel">Ajouter un nouvelle catégorie</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body box-shadow--3dp">
+                            <form action="" method="post" novalidate="novalidate">
+                                {{ form.csrf_token }}
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            {% if form.nom.errors %}
+                                            {{ form.nom(class="form-control is-invalid", placeholder="Nom")}}
+                                            <i class="form-group__bar"></i>
+                                            <div class="invalid-feedback">
+                                                {% for error in form.nom.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                            {% else %}
+                                            {{ form.nom(class="form-control", placeholder="Nom")}}
+                                            <i class="form-group__bar"></i>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <button id="submit" name="submit" type="submit"
+                                        class="btn btn-outline-success">Enregister</button>
+                                    <button type="button" data-dismiss="modal"
+                                        class="btn btn-outline-danger">Fermer</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

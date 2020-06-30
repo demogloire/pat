@@ -1,0 +1,290 @@
+{% extends 'layouts/admin.html' %}
+
+{% block css %}
+{% include 'elements/components/css.html'%}
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+{%endblock%}
+
+{% block sidebarleft %}
+{% include 'elements/admin/sidebar_left.html' %}
+{%endblock%}
+
+{% block header %}
+{% include 'elements/admin/header.html' %}
+{%endblock%}
+
+{% block body %}
+
+<section class="au-breadcrumb m-t-75">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="au-breadcrumb-content">
+                        <div class="au-breadcrumb-left">
+                            
+                            <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                <li class="list-inline-item active">
+                                    <a href="{{url_for('user.index')}}">Dashboard</a>
+                                </li>
+                                <li class="list-inline-item seprate">
+                                    <span>/</span>
+                                </li>
+                                <li class="list-inline-item">Liste des utilisateurs</li>
+                            </ul>
+                        </div>
+                        <button type="button" class="btn btn-primary mb-1" data-toggle="modal"
+                            data-target="#largeModal">
+                           <i class="fas fa-user"></i> Ajouter utilisateur
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {% with messages= get_flashed_messages(with_categories=true) %}
+                    {% if messages  %}
+                    {% for category, message in messages %}
+                    <div class="alert text-center alert-{{ category }}">
+                        <b>{{ message }}</b>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+            <div class="row">
+                {%for user in users%}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title mb-3">{{ user.type_user}}</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="mx-auto d-block">
+                                
+                                {% if user.avatar == 'default.png' %}
+                                <img class="rounded-circle mx-auto d-block" height="100" width="100" src="{{url_for('static', filename='image/default.png')}}"
+                                    alt="Card image cap">
+                                {% elif user.avatar =='avatar.jpg' %}
+                                <img class="rounded-circle mx-auto d-block" height="100" width="100" src="{{url_for('static', filename='image/default.png')}}"
+                                    alt="Card image cap">
+                                {%else%}
+                                <img class="rounded-circle mx-auto d-block" height="100" width="100" src="{{url_for('static', filename='image/{}'.format(user.avatar))}}"
+                                    alt="Card image cap">
+                                {%endif%}
+                                <h5 class="text-sm-center mt-2 mb-1">{{ '{} {}'.format(user.prenom, user.post_nom)}}</h5>
+                                <div class="location text-sm-center">
+                                    <i class="fa fa-key"></i> {{ user.type_user}}</div>
+                            </div>
+                            <hr>
+                            <div class="card-text text-sm-center">
+                                {%if user.statut==True%}
+                                <a href="{{url_for('user.acivation_user', id=user.id)}}">
+                                    <i class="fa fa-unlock"></i>
+                                </a>
+                                {%else%}
+                                <a href="{{url_for('user.acivation_user', id=user.id)}}">
+                                    <i class="fa fa-lock"></i>
+                                </a>
+                                {%endif%}
+
+
+                                <a href=" {{url_for('user.edit', id=user.id)}} ">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                    
+                </div>
+
+                
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{%endblock%}
+
+
+{% block footer %}
+{% include 'elements/admin/footer.html' %}
+{%endblock%}
+
+{% block js %}
+{% include 'elements/components/js.html'%}
+
+
+
+<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="largeModalLabel">Ajouter un nouvel utilisateur</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body box-shadow--3dp">
+                            <form action="" method="post" novalidate="novalidate">
+                                {{ form.csrf_token }}
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            {% if form.prenom.errors %}
+                                            {{ form.prenom(class="form-control is-invalid", placeholder="Prénom")}}
+                                            <i class="form-group__bar"></i>
+                                            <div class="invalid-feedback">
+                                                {% for error in form.prenom.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                            {% else %}
+                                            {{ form.prenom(class="form-control", placeholder="Prénom")}}
+                                            <i class="form-group__bar"></i>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            {% if form.nom.errors %}
+                                            {{ form.nom(class="form-control is-invalid", placeholder="Nom")}}
+                                            <i class="form-group__bar"></i>
+                                            <div class="invalid-feedback">
+                                                {% for error in form.nom.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                            {% else %}
+                                            {{ form.nom(class="form-control", placeholder="Nom")}}
+                                            <i class="form-group__bar"></i>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            {% if form.post_nom.errors %}
+                                            {{ form.post_nom(class="form-control is-invalid", placeholder="Post-nom")}}
+                                            <i class="form-group__bar"></i>
+                                            <div class="invalid-feedback">
+                                                {% for error in form.post_nom.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                            {% else %}
+                                            {{ form.post_nom(class="form-control", placeholder="Post-nom")}}
+                                            <i class="form-group__bar"></i>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            {% if form.username.errors %}
+                                            {{ form.username(class="form-control is-invalid", placeholder="E-mail")}}
+                                            <i class="form-group__bar"></i>
+                                            <div class="invalid-feedback">
+                                                {% for error in form.username.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                            {% else %}
+                                            {{ form.username(class="form-control", placeholder="E-mail")}}
+                                            <i class="form-group__bar"></i>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            {% if form.password.errors %}
+                                            {{ form.password(class="form-control is-invalid", placeholder="Mot de passe")}}
+                                            <i class="form-group__bar"></i>
+                                            <div class="invalid-feedback">
+                                                {% for error in form.password.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                            {% else %}
+                                            {{ form.password(class="form-control", placeholder="Mot de passe")}}
+                                            <i class="form-group__bar"></i>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            {% if form.confirm.errors %}
+                                            {{ form.confirm(class="form-control is-invalid", placeholder="Répeter mot de passe")}}
+                                            <i class="form-group__bar"></i>
+                                            <div class="invalid-feedback">
+                                                {% for error in form.confirm.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                            {% else %}
+                                            {{ form.confirm(class="form-control", placeholder="Répeter mot de passe")}}
+                                            <i class="form-group__bar"></i>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            {% if form.role.errors %}
+                                            {{ form.role(class="form-control is-invalid")}}
+                                            <i class="form-group__bar"></i>
+                                            <div class="invalid-feedback">
+                                                {% for error in form.role.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                            {% else %}
+                                            {{ form.role(class="form-control")}}
+                                            <i class="form-group__bar"></i>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="text-center">
+                                    <button id="submit" name="submit" type="submit"
+                                        class="btn btn-outline-success">Enregister</button>
+                                    <button type="button" data-dismiss="modal"
+                                        class="btn btn-outline-danger">Fermer</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

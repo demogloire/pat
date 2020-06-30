@@ -1,0 +1,226 @@
+{% extends 'layouts/admin.html' %}
+
+{% block css %}
+{% include 'elements/components/css.html'%}
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+<script src=" {{ url_for('static', filename='summnernote/jquer.js')}} "></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='summnernote/summernote-lite.css')}} ">
+<script src="{{ url_for('static', filename='summnernote/summernote-lite.js')}}"></script>
+{%endblock%}
+
+{% block sidebarleft %}
+{% include 'elements/admin/sidebar_left.html' %}
+{%endblock%}
+
+{% block header %}
+{% include 'elements/admin/header.html' %}
+{%endblock%}
+
+{% block body %}
+
+<section class="au-breadcrumb m-t-75">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="au-breadcrumb-content">
+                        <div class="au-breadcrumb-left">
+                            <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                <li class="list-inline-item active">
+                                    <a href=" {{url_for('produit.index')}} ">Produit</a>
+                                </li>
+                                <li class="list-inline-item seprate">
+                                    <span>/</span>
+                                </li>
+                                <li class="list-inline-item">Editer produit</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="col-lg-9" id="formEditUser">
+    <h2>Modification produit</h2>
+    <div class="row">
+        <div class="col-md-12">
+            {% with messages= get_flashed_messages(with_categories=true) %}
+            {% if messages  %}
+            {% for category, message in messages %}
+            <div class="alert text-center alert-{{ category }}">
+                <b>{{ message }}</b>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body box-shadow--3dp">
+            <form action="" method="post" novalidate="novalidate" enctype="multipart/form-data">
+                {{ form.csrf_token }}
+                <center>
+                    
+                <img class="card-img-top" src="{{ url_for('static', filename='produit/{}'.format(avatar))}}" id="image_produit"  alt="Card image cap">
+                </center>
+                
+                <div class="row">
+                    <div class="col-md-12"><br/>
+                        <div class="form-group">
+                            {% if form.nom.errors %}
+                            {{ form.nom(class="form-control is-invalid", placeholder="Nom")}}
+                            <i class="form-group__bar"></i>
+                            <div class="invalid-feedback">
+                                {% for error in form.nom.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.nom(class="form-control", placeholder="Nom")}}
+                            <i class="form-group__bar"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {% if form.cout_production.errors %}
+                            {{ form.cout_production(class="form-control is-invalid", placeholder="Cout production")}}
+                            <i class="form-group__bar"></i>
+                            <div class="invalid-feedback">
+                                {% for error in form.cout_production.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.cout_production(class="form-control", placeholder="Cout production")}}
+                            <i class="form-group__bar"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {% if form.cout_vente_detaille.errors %}
+                            {{ form.cout_vente_detaille(class="form-control is-invalid", placeholder="Cout vente detaille")}}
+                            <i class="form-group__bar"></i>
+                            <div class="invalid-feedback">
+                                {% for error in form.cout_vente_detaille.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.cout_vente_detaille(class="form-control", placeholder="Cout vente detaille")}}
+                            <i class="form-group__bar"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {% if form.cout_vente_engros.errors %}
+                            {{ form.cout_vente_engros(class="form-control is-invalid", placeholder="Cout vente engros")}}
+                            <i class="form-group__bar"></i>
+                            <div class="invalid-feedback">
+                                {% for error in form.cout_vente_engros.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.cout_vente_engros(class="form-control", placeholder="Cout vente engros")}}
+                            <i class="form-group__bar"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {% if form.description.errors %}
+                            {{ form.description(id="summernote", placeholder="Description")}}
+                            <i class="form-group__bar"></i>
+                            <div class="invalid-feedback">
+                                {% for error in form.description.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.description(id="summernote", placeholder="Description")}}
+                            <i class="form-group__bar"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {% if form.categorie_produit.errors %}
+                            {{ form.categorie_produit(class="form-control is-invalid")}}
+                            <i class="form-group__bar"></i>
+                            <div class="invalid-feedback">
+                                {% for error in form.categorie_produit.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.categorie_produit(class="form-control")}}
+                            <i class="form-group__bar"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="text-center">
+                    <button id="submit" name="submit" type="submit"
+                        class="btn btn-outline-success">Enregister</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div style="height: 200px;"></div>
+
+<style>
+    #formEditUser{
+        margin-top: 30px;
+    }
+    #formEditUser h2{
+        margin-bottom: 20px;
+    }
+    #image_produit{
+        width: 40% !important;
+        margin: auto;
+    }
+</style>
+
+
+{%endblock%}
+
+
+{% block footer %}
+{% include 'elements/admin/footer.html' %}
+<script>
+    $('#summernote').summernote({
+        height: 300,                 // set editor height
+        minHeight: null,             // set minimum height of editor
+        maxHeight: null,             // set maximum height of editor
+        focus: true                  // set focus to editable area after initializing summernote
+    });
+</script>
+{%endblock%}
+
+{% block js %}
+{% include 'elements/components/js.html'%}
+
+
+
+
+{%endblock%}

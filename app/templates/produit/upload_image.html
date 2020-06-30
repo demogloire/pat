@@ -1,0 +1,129 @@
+{% extends 'layouts/admin.html' %}
+
+{% block css %}
+{% include 'elements/components/css.html'%}
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+<script src=" {{ url_for('static', filename='summnernote/jquer.js')}} "></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='summnernote/summernote-lite.css')}} ">
+<script src="{{ url_for('static', filename='summnernote/summernote-lite.js')}}"></script>
+{%endblock%}
+
+{% block sidebarleft %}
+{% include 'elements/admin/sidebar_left.html' %}
+{%endblock%}
+
+{% block header %}
+{% include 'elements/admin/header.html' %}
+{%endblock%}
+
+{% block body %}
+
+<section class="au-breadcrumb m-t-75">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="au-breadcrumb-content">
+                        <div class="au-breadcrumb-left">
+                            <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                <li class="list-inline-item active">
+                                    <a href=" {{url_for('produit.index')}} ">Produit</a>
+                                </li>
+                                <li class="list-inline-item seprate">
+                                    <span>/</span>
+                                </li>
+                                <li class="list-inline-item">Chargement des images</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="col-lg-9" id="formEditUser">
+    <div class="row">
+        <div class="col-md-12">
+            {% with messages= get_flashed_messages(with_categories=true) %}
+            {% if messages  %}
+            {% for category, message in messages %}
+            <div class="alert text-center alert-{{ category }}">
+                <b>{{ message }}</b>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+    <h2>Ajouté autres images</h2>
+    <div class="card">
+        <div class="card-body box-shadow--3dp">
+            <form action="" method="post" novalidate="novalidate" enctype="multipart/form-data">
+                {{ form.csrf_token }}
+               
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {% if form.image_produit.errors %}
+                            {{ form.image_produit(class=" is-invalid", placeholder="Avatar")}}
+                            <i class="form-group__bar"></i>
+                            <div class="invalid-feedback">
+                                {% for error in form.image_produit.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.image_produit(class="", placeholder="Avatar")}}
+                            <i class="form-group__bar"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button id="submit" name="submit" type="submit"
+                        class="btn btn-outline-success">Upload image
+                    </button>
+                    <a href=" {{url_for('produit.terminer_upload')}} " class="btn btn-outline-danger">Terminer</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div style="height: 200px;"></div>
+
+<style>
+    #formEditUser{
+        margin-top: 30px;
+    }
+    #formEditUser h2{
+        margin-bottom: 20px;
+    }
+</style>
+
+
+{%endblock%}
+
+
+{% block footer %}
+{% include 'elements/admin/footer.html' %}
+<script>
+    $('#summernote').summernote({
+        height: 300,                 // set editor height
+        minHeight: null,             // set minimum height of editor
+        maxHeight: null,             // set maximum height of editor
+        focus: true                  // set focus to editable area after initializing summernote
+    });
+</script>
+{%endblock%}
+
+{% block js %}
+{% include 'elements/components/js.html'%}
+
+
+
+
+{%endblock%}

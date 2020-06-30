@@ -1,0 +1,122 @@
+{% extends 'layouts/admin.html' %}
+
+{% block css %}
+{% include 'elements/components/css.html'%}
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+{%endblock%}
+
+{% block sidebarleft %}
+{% include 'elements/admin/sidebar_left.html' %}
+{%endblock%}
+
+{% block header %}
+{% include 'elements/admin/header.html' %}
+{%endblock%}
+
+{% block body %}
+
+<section class="au-breadcrumb m-t-75">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="au-breadcrumb-content">
+                        <div class="au-breadcrumb-left">
+                            <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                <li class="list-inline-item active">
+                                    <a href="{{url_for('categorie.index')}}">Catégorie</a>
+                                </li>
+                                <li class="list-inline-item seprate">
+                                    <span>/</span>
+                                </li>
+                                <li class="list-inline-item">Editer catégorie</li>
+                            </ul>
+                        </div>                                                                  
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {% with messages= get_flashed_messages(with_categories=true) %}
+                    {% if messages  %}
+                    {% for category, message in messages %}
+                    <div class="alert text-center alert-{{ category }}">
+                        <b>{{ message }}</b>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-9">
+                    <p style="font-size: 25px;">Modification de Catégorie {{cat}}</p> 
+                    <br>
+                <div class="card">
+
+                    <div class="card-body card-block box-shadow--3dp">                   
+                <form action="" method="post" novalidate="novalidate">
+                    {{ form.csrf_token }}
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {% if form.nom.errors %}
+                                {{ form.nom(class="form-control is-invalid", placeholder="Catégorie")}}
+                                <i class="form-group__bar"></i>
+                                <div class="invalid-feedback">
+                                    {% for error in form.nom.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.nom(class="form-control", placeholder="Prénom")}}
+                                <i class="form-group__bar"></i>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="text-center">
+                        <button id="submit" name="submit" type="submit" class="btn btn-outline-success">Editer</button>
+                    </div>
+                </form>
+                
+            </div>
+            </div>
+            </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{%endblock%}
+
+
+{% block footer %}
+{% include 'elements/admin/footer.html' %}
+{%endblock%}
+
+{% block js %}
+{% include 'elements/components/js.html'%}
+
+
+
+
+
+{%endblock%}
