@@ -6,6 +6,7 @@ from PIL import Image
 from .. import create_app
 from .. import db
 from functools import wraps
+from ..models import Categorie
 
 
 config_name = os.getenv('FLASK_CONFIG')
@@ -32,3 +33,8 @@ def autorisation_super_admin(f):
         else:
             return redirect(url_for('main.main'))       
     return wrap
+
+
+
+            
+            

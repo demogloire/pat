@@ -1,0 +1,52 @@
+<div class="dropdown">
+    {%if current_user.is_authenticated %}
+        {%if current_user.type_user=='Client' %}
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="ion-ios-cart"></i> 
+            <span class="badge badge-primary"> {{nbr_panier}}  </span>
+        </a>
+        
+        {%if panier_glob>0 %}
+        <ul class="dropdown-menu dropdown-menu-right dropdown-cart">
+            <li>
+                
+                <ul class="list-unstyled">
+
+                    {%for produit_panier in panier_contenu%}
+                    
+                    <li class="clearfix">
+                        <a href="#" class="float-left">
+                            <img src="{{url_for('static', filename='produit/{}'.format(produit_panier.produit_panier.avatar))}}" class="img-fluid" alt="" width="60">
+                        </a>
+                        <div class="oHidden">
+                            <a href="javascript://" onclick="Sijax.request('supp_panier',[{{produit_panier.id}}]);"><span class="close"><i class="ion-ios-close-outline"></i></span></a>
+                            <h4><a href="">{{produit_panier.produit_panier.nom}}</a></h4>
+                            <p class="text-white-gray"><strong>${{produit_panier.produit_panier.cout_vente_detaille}}</strong> x 1</p>
+                        </div>
+                    </li><!--/cart item-->
+                    {%endfor%}
+
+
+                    <li class="clearfix">
+
+                        <div class="float-right">
+                            <a href="#" class="btn btn-primary">Payer</a>
+                        </div>
+                        <h4>
+                            <small>Totalité:  </small> ${{panier_glob}}
+                        </h4>
+                    </li><!--/cart item-->
+                </ul>
+                
+            </li>
+        </ul>
+        {%endif%}
+    {%endif%}
+
+    {%else%}
+    <a href="{{url_for('auth.user_login')}}" class="nav-link dropdown-toggle">
+        
+        <span class="label label-default"></span><i class="ion-ios-person"></i> </span> 
+        
+    </a>
+    {%endif%}
+</div>

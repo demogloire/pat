@@ -42,7 +42,7 @@ class EditerProduitForm(FlaskForm):
 
 
 class ImageProduitForm(FlaskForm):
-    image_produit= FileField("Image",validators=[FileAllowed(['jpg','png'],'Seul jpg et png sont autorisés')])
+    image_produit= FileField("Image",validators=[DataRequired("Uploqd l'image"), FileAllowed(['jpg','png'],'Seul jpg et png sont autorisés')])
     submit = SubmitField('Ajouter Image')
 
 

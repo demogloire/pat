@@ -78,6 +78,7 @@
                                         <td>No</td>
                                         <td>Catégorie</td>
                                         <td>Produit associé</td>
+                                        <td>Priorité</td>
                                         <td>Statut</td>
                                         <td>Action</td>
                                     </tr>
@@ -95,6 +96,24 @@
                                         </td>
                                         <td>
                                             {{cat.relation_produit}}
+                                        </td>
+                                        <td>
+
+                                            {%if cat.priorite==True %}
+                                            <a href="{{url_for('categorie.priorite_categorie', id=cat.id)}}"
+                                                class="btn btn-outline-primary btn-sm" data-toggle="tooltip"
+                                                data-placement="top" title="Active">
+                                                <i class="fas  fa-bell"></i>
+                                            </a>
+                                            {%else%}
+                                            <a href="{{url_for('categorie.priorite_categorie', id=cat.id)}}"
+                                                class="btn btn-sm btn-outline-danger" data-toggle="tooltip"
+                                                data-placement="top" title="Inactive">
+                                                <i class="fas fa-bell-slash"></i>
+                                            </a>
+
+
+                                            {%endif%}
                                         </td>
                                         <td>
 

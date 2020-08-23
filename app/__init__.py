@@ -5,7 +5,13 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_login import LoginManager
+import flask_sijax
+
+
 from config import app_config
+
+
+path = os.path.join('.', os.path.dirname(__file__), 'static/js/sijax/')
 
 db = SQLAlchemy()
 login_manager= LoginManager()
@@ -22,10 +28,16 @@ def create_app(config_name):
     migrate = Migrate(app, db)
     login_manager.init_app(app)
     bcrypt.init_app(app)
+    #Sijax
+    app.config['SIJAX_STATIC_PATH'] = path
+    app.config['SIJAX_JSON_URI'] = '/static/js/sijax/json2.js'
+    flask_sijax.Sijax(app)
+    
+    
     
     #Login manager use
     login_manager.login_message = "Veuillez vous connecté"
-    login_manager.login_view = "auth.login"
+    login_manager.login_view = "auth.user_login"
     login_manager.login_message_category ='danger'
 
 
@@ -52,6 +64,10 @@ def create_app(config_name):
     #Internaute
     from.internaute import internaute as internaute_blueprint
     app.register_blueprint(internaute_blueprint)
+    
+     #Client
+    from.client import client as client_blueprint
+    app.register_blueprint(client_blueprint)
 
 
 

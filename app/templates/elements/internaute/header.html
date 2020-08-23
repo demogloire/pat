@@ -46,71 +46,31 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown" style="max-height: 446.117px;">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link" href="reservation.html">Acceuil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="reservation.html">Categorie 1</a></li>
-                    <li class="nav-item"><a class="nav-link" href="reservation.html">Categorie 2</a></li>
-                    <li class="nav-item"><a class="nav-link" href="reservation.html">Categorie 3</a></li>
-                    <li class="nav-item"><a class="nav-link" href="reservation.html">Categorie 4</a></li>
-                    <li class="nav-item"><a class="nav-link" href="reservation.html">Autres Categories</a></li>
+                    {%if menu_primaire|count > 0 %}
+                    {%for categorie in menu_primaire %}
+                        <li class="nav-item"><a class="nav-link" href="reservation.html">{{categorie[1]}}</a></li>
+                    {%endfor%}
+                    {%endif%}
+
+                    {%if menu_secondaire|count > 0 %}
                     <li class="dropdown nav-item">
-                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Autres <span class="caret"></span></a>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a class="dropdown-item" href="shop-products.html">Products</a></li>
-                            <li><a class="dropdown-item" href="shop-cart.html">Cart</a></li>
-                            <li><a class="dropdown-item" href="shop-checkout.html">Checkout</a></li>
+                            {%for categorie in menu_secondaire %}
+                            <li><a class="dropdown-item" href="shop-products.html">{{categorie[1]}}</a></li>
+                            {%endfor%}
                         </ul>
                     </li>
+                    
+                    {%endif%}
                 </ul>
             </div><!--/.nav-collapse -->
             <!--cart icon-->
             <div class="float-right cart-nav nav-item">
-                <div class="dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="ion-ios-cart"></i> <span class="badge badge-primary">3</span></a>
-                    <ul class="dropdown-menu dropdown-menu-right dropdown-cart">
-                        <li>
-                            <ul class="list-unstyled">
-                                <li class="clearfix">
-                                    <a href="#" class="float-left">
-                                        <img src="assets/images/img-2.jpg" class="img-fluid" alt="" width="60">
-                                    </a>
-                                    <div class="oHidden">
-                                        <span class="close"><i class="ion-ios-close-outline"></i></span>
-                                        <h4><a href="#">Product Title</a></h4>
-                                        <p class="text-white-gray"><strong>$299.00</strong> x 1</p>
-                                    </div>
-                                </li><!--/cart item-->
-                                <li class="clearfix">
-                                    <a href="#" class="float-left">
-                                        <img src="assets/images/img-1.jpg" class="img-fluid" alt="" width="60">
-                                    </a>
-                                    <div class="oHidden">
-                                        <span class="close"><i class="ion-ios-close-outline"></i></span>
-                                        <h4><a href="#">Product Title</a></h4>
-                                        <p class="text-white-gray"><strong>$99.00</strong> x 1</p>
-                                    </div>
-                                </li><!--/cart item-->
-                                <li class="clearfix">
-                                    <a href="#" class="float-left">
-                                        <img src="assets/images/img-3.jpg" class="img-fluid" alt="" width="60">
-                                    </a>
-                                    <div class="oHidden">
-                                        <span class="close"><i class="ion-ios-close-outline"></i></span>
-                                        <h4><a href="#">Product Title</a></h4>
-                                        <p class="text-white-gray"><strong>$199.00</strong> x 1</p>
-                                    </div>
-                                </li><!--/cart item-->
-                                <li class="clearfix">
-
-                                    <div class="float-right">
-                                        <a href="#" class="btn btn-primary">Checkout</a>
-                                    </div>
-                                    <h4>
-                                        <small>Subtotal - </small> $49.99
-                                    </h4>
-                                </li><!--/cart item-->
-                            </ul>
-                        </li>
-                    </ul>
+                <div id="panier">
+                    {% include 'elements/internaute/jquery_page/panier.html'%}
                 </div>
+
             </div>
         </div><!--/.container-fluid -->
     </nav></div>

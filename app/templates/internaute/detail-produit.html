@@ -4,6 +4,155 @@
 
 {% block css %}
 {% include 'elements/internaute/css.html'%}
+<script type="text/javascript" src="/static/js/sijax/sijax.js"></script>
+<script type="text/javascript">
+    {{ g.sijax.get_js()|safe }}
+</script>
+
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+
+<link href="{{url_for('static', filename='admin/vendor/font-awesome-4.7/css/font-awesome.min.css')}}" rel="stylesheet" media="all">
+
+<link src="{{url_for('static', filename='bootstrap.min.css')}}" rel="stylesheet" id="bootstrap-css">
+<script src="{{url_for('static', filename='bootsrap.min.js')}}"></script>
+<script src="{{url_for('static', filename='jquery.js')}}"></script>
+
+<style>
+  /*
+    code by Iatek LLC 2018 - CC 2.0 License - Attribution required
+    code customized by Azmind.com
+*/
+@media (min-width: 768px) and (max-width: 991px) {
+    /* Show 4th slide on md if col-md-4*/
+    .carousel-inner .active.col-md-4.carousel-item + .carousel-item + .carousel-item + .carousel-item {
+        position: absolute;
+        top: 0;
+        right: -33.3333%;  /*change this with javascript in the future*/
+        z-index: -1;
+        display: block;
+        visibility: visible;
+    }
+}
+@media (min-width: 576px) and (max-width: 768px) {
+    /* Show 3rd slide on sm if col-sm-6*/
+    .carousel-inner .active.col-sm-6.carousel-item + .carousel-item + .carousel-item {
+        position: absolute;
+        top: 0;
+        right: -50%;  /*change this with javascript in the future*/
+        z-index: -1;
+        display: block;
+        visibility: visible;
+    }
+}
+@media (min-width: 576px) {
+    .carousel-item {
+        margin-right: 0;
+    }
+    /* show 2 items */
+    .carousel-inner .active + .carousel-item {
+        display: block;
+    }
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item {
+        transition: none;
+    }
+    .carousel-inner .carousel-item-next {
+        position: relative;
+        transform: translate3d(0, 0, 0);
+    }
+    /* left or forward direction */
+    .active.carousel-item-left + .carousel-item-next.carousel-item-left,
+    .carousel-item-next.carousel-item-left + .carousel-item,
+    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item {
+        position: relative;
+        transform: translate3d(-100%, 0, 0);
+        visibility: visible;
+    }
+    /* farthest right hidden item must be also positioned for animations */
+    .carousel-inner .carousel-item-prev.carousel-item-right {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        display: block;
+        visibility: visible;
+    }
+    /* right or prev direction */
+    .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
+    .carousel-item-prev.carousel-item-right + .carousel-item,
+    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item {
+        position: relative;
+        transform: translate3d(100%, 0, 0);
+        visibility: visible;
+        display: block;
+        visibility: visible;
+    }
+}
+/* MD */
+@media (min-width: 768px) {
+    /* show 3rd of 3 item slide */
+    .carousel-inner .active + .carousel-item + .carousel-item {
+        display: block;
+    }
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item {
+        transition: none;
+    }
+    .carousel-inner .carousel-item-next {
+        position: relative;
+        transform: translate3d(0, 0, 0);
+    }
+    /* left or forward direction */
+    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item {
+        position: relative;
+        transform: translate3d(-100%, 0, 0);
+        visibility: visible;
+    }
+    /* right or prev direction */
+    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item {
+        position: relative;
+        transform: translate3d(100%, 0, 0);
+        visibility: visible;
+        display: block;
+        visibility: visible;
+    }
+}
+/* LG */
+@media (min-width: 991px) {
+    /* show 4th item */
+    .carousel-inner .active + .carousel-item + .carousel-item + .carousel-item {
+        display: block;
+    }
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item {
+        transition: none;
+    }
+    /* Show 5th slide on lg if col-lg-3 */
+    .carousel-inner .active.col-lg-3.carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+        position: absolute;
+        top: 0;
+        right: -25%;  /*change this with javascript in the future*/
+        z-index: -1;
+        display: block;
+        visibility: visible;
+    }
+    /* left or forward direction */
+    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+        position: relative;
+        transform: translate3d(-100%, 0, 0);
+        visibility: visible;
+    }
+    /* right or prev direction //t - previous slide direction last item animation fix */
+    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+        position: relative;
+        transform: translate3d(100%, 0, 0);
+        visibility: visible;
+        display: block;
+        visibility: visible;
+    }
+}
+</style>
+
+
+
 {%endblock%}
 
 
@@ -16,10 +165,318 @@
 
 
 
-<!-- style header -->
+<!-- style body -->
 
 {% block body %}
-{% include 'elements/internaute/_body-detail-produit.html'%}
+
+
+
+<div class="page-breadcrumb">
+    <div class="container text-center">
+        <h1>{{produit.nom}}</h1>
+    </div>
+</div>
+
+
+	<div class="container">
+		<div class="card" >
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+						
+						<div class="preview-pic tab-content">
+              <div class="tab-pane active" id="pic-0"><img src="{{url_for('static', filename='produit/{}'.format(produit.avatar))}}" /></div>
+              {%for image in produit.fichiers %}
+						  <div class="tab-pane" id="pic-{{loop.index}}"><img src="{{url_for('static', filename='produit/{}'.format(image.urlProduit))}}" /></div>
+              {%endfor%}
+
+              <ul class="preview-thumbnail nav nav-tabs">
+                <li class="active"><a data-target="#pic-0" data-toggle="tab"><img src="{{url_for('static', filename='produit/{}'.format(produit.avatar))}}" /></a></li>
+                {%for image in produit.fichiers %}
+                <li><a data-target="#pic-{{loop.index}}" data-toggle="tab"><img src="{{url_for('static', filename='produit/{}'.format(image.urlProduit))}}" /></a></li>
+                {%endfor%}
+              </ul>
+						</div>
+
+						
+					</div>
+					<div class="details col-md-6">
+						<h3 class="product-title">{{produit.nom}}</h3>
+            <hr>
+						<p class="product-description" style="text-align: justify;"> {{produit.description|safe}} </p>
+            <h4 class="price">Prix: <span>${{produit.cout_vente_detaille|round(2)}}</span></h4>
+            
+            <br><br>
+						<div class="action">
+              <br>
+							<a class="add-to-cart btn btn-default" href="javascript://" onclick="Sijax.request('ajouter_panier',[{{produit.id}}]);"> <i class="ion-ios-cart"></i> Ajouter au panier</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    <br/><br/>
+
+
+
+
+    <div class="my-5 container">
+        <div class="row mb-2">
+           <div class="col text-center">
+              <h1>Les produits de la même catégorie</h1>
+              <p class="lead">Choisir les autres produits de la cagétorie {{produit.categorie_produit.nom}} </p>
+           </div>
+        </div>
+        
+        <!-- Top content -->
+        <div class="top-content"> 
+          <div class="container-fluid">
+              <div id="carousel-example" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner row w-100 mx-auto" role="listbox">
+
+                    {%for item in sumalire%}
+                      
+                      <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 {%if loop.index==1%} active{%endif%} ">  
+                         <!--Card-->
+                        <div class="card" style="padding: 0 !important; border: 2px solid #ddd !important;" >
+                          <!--Card image-->
+                          <div class="product-image">
+                            <a href="{{url_for('internaute.internaute_detail_produit', id=item[0])}}"><img src="{{url_for('static', filename='produit/{}'.format(item[3]))}}" class="card-img-top" alt="photo"></a>
+                        </div>
+                          <!--Card content-->
+                          <div class="card-body">
+                              <!--Title-->
+                              <h4 class="card-title font-weight-bold mb-2">
+                                <a href="{{url_for('internaute.internaute_detail_produit', id=item[0])}}">{{item[1]}}</a>
+                              </h4>
+                              <div class="rating py-2">
+                                <i class="fa fa-star text-warning"></i>
+                                <i class="fa fa-star text-warning"></i>
+                                <i class="fa fa-star text-warning"></i>
+                                <i class="fa fa-star text-warning"></i>
+                                <i class="fa fa-star-half-o text-warning"></i>
+                              </div>
+                              
+                              <div class="text-right">
+                                <a class="btn btn-block btn-primary" href="javascript://" onclick="Sijax.request('ajouter_panier',[{{item[0]}}]);">
+                                  <i class="ion-ios-cart"></i>
+                                </a>
+                              </div>
+                          </div>
+                          <div class="card-footer bg-transparent d-flex justify-content-between">
+                              <div class="text-left ">
+                                <span>
+                              
+                                  {%if item[5]|round() != 0 and item[5]|round() != 100 %}
+                                  <strong class="font-weight-bold">{{item[5]|int()}}% réd.
+                                  </strong>
+                                  {%endif%}
+                                </span>
+                              </div>
+                              
+                              <div class="text-right">
+                                {%if item[5]|round() != 0 and item[5]|round() != 100 %}
+                                <del class="text-muted mr-2">${{item[6]}}</del>
+                                {%endif%}
+                                <strong class="text-primary font-weight-bold">${{item[2]}}</strong>
+                              </div>
+                          </div>
+                        </div>
+                        <!--/.Card-->
+                      </div>
+                    {%endfor%}
+                  </div>
+                  <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carousel-example" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                  </a>
+              </div>
+          </div>
+        </div>
+
+
+
+    </div>
+          
+    </div>
+     </div>
+     <br><br>
+
+     
+
+
+<style>
+
+/*****************globals*************/
+img {
+  max-width: 100%; }
+
+.preview {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+  @media screen and (max-width: 996px) {
+    .preview {
+      margin-bottom: 20px; } }
+
+.preview-pic {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1; }
+
+.preview-thumbnail.nav-tabs {
+  border: none;
+  margin-top: 15px; }
+  .preview-thumbnail.nav-tabs li {
+    width: 18%;
+    margin-right: 2.5%; 
+    }
+    .preview-thumbnail.nav-tabs li img {
+      max-width: 100%;
+      display: block; }
+    .preview-thumbnail.nav-tabs li a {
+      padding: 0;
+      margin: 0; }
+    .preview-thumbnail.nav-tabs li:last-of-type {
+      margin-right: 0; }
+
+.tab-content {
+  overflow: hidden; }
+  .tab-content img {
+    width: 100%;
+    -webkit-animation-name: opacity;
+            animation-name: opacity;
+    -webkit-animation-duration: .3s;
+            animation-duration: .3s; }
+
+.card {
+  margin-top: 50px;
+  /* background: #eee; */
+  border: 0 !important;
+  padding: 3em;
+  line-height: 1.5em; }
+
+@media screen and (min-width: 997px) {
+  .wrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex; } }
+
+.details {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+
+.colors {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1; }
+
+.product-title, .price, .sizes, .colors {
+  text-transform: UPPERCASE;
+  font-weight: bold; }
+
+.checked, .price span {
+  color: #ff9f1a; }
+
+.product-title, .rating, .product-description, .price, .vote, .sizes {
+  margin-bottom: 15px; }
+
+.product-title {
+  margin-top: 0; }
+
+.size {
+  margin-right: 10px; }
+  .size:first-of-type {
+    margin-left: 40px; }
+
+.color {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+  height: 2em;
+  width: 2em;
+  border-radius: 2px;   
+  }
+  .color:first-of-type {
+    margin-left: 20px; }
+
+.add-to-cart, .like {
+  background: #ff9f1a;
+  padding: 1.2em 1.5em;
+  border: none;
+  text-transform: UPPERCASE;
+  font-weight: bold;
+  color: #fff;
+  -webkit-transition: background .3s ease;
+          transition: background .3s ease; }
+  .add-to-cart:hover, .like:hover {
+    background: #b36800;
+    color: #fff; }
+
+.not-available {
+  text-align: center;
+  line-height: 2em; }
+  .not-available:before {
+    font-family: fontawesome;
+    content: "\f00d";
+    color: #fff; }
+
+.orange {
+  background: #ff9f1a; }
+
+.green {
+  background: #85ad00; }
+
+.blue {
+  background: #0076ad; }
+
+.tooltip-inner {
+  padding: 1.3em; }
+
+@-webkit-keyframes opacity {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(3);
+            transform: scale(3); }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+@keyframes opacity {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(3);
+            transform: scale(3); }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+</style>
+
+
 {%endblock%}
 
 
@@ -34,5 +491,49 @@
 <!-- style js -->
 
 {% block js %}
+
 {% include 'elements/internaute/js.html'%}
+
+<script type="text/javascript" src="/static/js/sijax/sijax.js"></script>
+<script type="text/javascript">
+    {{ g.sijax.get_js()|safe }}
+</script>
+<script type="text/javascript" src="{{url_for('static', filename='customs.js')}}"></script>
+
+
+
+<script>
+  
+
+  /*
+    Carousel
+*/
+$('#carousel-example').on('slide.bs.carousel', function (e) {
+    /*
+        CC 2.0 License Iatek LLC 2018 - Attribution required
+    */
+    var $e = $(e.relatedTarget);
+    var idx = $e.index();
+    var itemsPerSlide = 4;
+    var totalItems = $('.carousel-item').length;
+ 
+    if (idx >= totalItems-(itemsPerSlide-1)) {
+        var it = itemsPerSlide - (totalItems - idx);
+        for (var i=0; i<it; i++) {
+            // append slides to end
+            if (e.direction=="left") {
+                $('.carousel-item').eq(i).appendTo('.carousel-inner');
+            }
+            else {
+                $('.carousel-item').eq(0).appendTo('.carousel-inner');
+            }
+        }
+    }
+});
+
+
+
+
+</script>
+
 {%endblock%}

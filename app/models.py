@@ -20,6 +20,7 @@ class Produit(db.Model):
     categorie_id = db.Column(db.Integer, db.ForeignKey('categorie.id'), nullable=False)
     ventes = db.relationship('Vente', backref='vente_produit', lazy='dynamic')
     fichiers = db.relationship('Fichier', backref='produit_fichier', lazy='dynamic')
+    paniers = db.relationship('Panier', backref='produit_panier', lazy='dynamic')
     
 
 class Categorie(db.Model):
@@ -48,28 +49,34 @@ class User(db.Model, UserMixin):
     categories = db.relationship('Categorie', backref='user_categorie', lazy='dynamic')
     paniers = db.relationship('Panier', backref='user_panier', lazy='dynamic')
     depenses = db.relationship('Depense', backref='user_depense', lazy='dynamic')
+    commandes = db.relationship('Commande', backref='user_commande', lazy='dynamic')
 
 class Panier(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quantite = db.Column(db.DECIMAL(precision=10, scale=2, asdecimal=False))
     prix = db.Column(db.DECIMAL(precision=10, scale=2, asdecimal=False))
     montant = db.Column(db.DECIMAL(precision=10, scale=2, asdecimal=False))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    produit_id = db.Column(db.Integer, db.ForeignKey('produit.id'), nullable=False)
 
 class Commande(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.Integer)
+    code= db.Column(db.String(120))
     montantGenerale = db.Column(db.DECIMAL(precision=10, scale=2, asdecimal=False))
-    DateCommende = db.Column(db.Date, default=date.today())
+    date_commande = db.Column(db.Date, default=datetime.utcnow)
     livraison = db.Column(db.Boolean)
-    DateLivraison = db.Column(db.Date, default=date.today())
+    date_livraison = db.Column(db.Date, default=datetime.utcnow)
     statut = db.Column(db.Boolean)
-    montantEchellon = db.Column(db.DECIMAL(precision=10, scale=2, asdecimal=False))
+    lieu_de_livraison=db.Column(db.String(120))
+    telphone=db.Column(db.String(20))
+    montant_echellon = db.Column(db.DECIMAL(precision=10, scale=2, asdecimal=False))
     ventes = db.relationship('Vente', backref='commande_vente', lazy='dynamic')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     payements = db.relationship('Payement', backref='commande_payement', lazy='dynamic')
 
 class Payement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    code_payement=db.Column(db.String(120))
     somme = db.Column(db.DECIMAL(precision=10, scale=2, asdecimal=False))
     commande_id = db.Column(db.Integer, db.ForeignKey('commande.id'), nullable=False)
     

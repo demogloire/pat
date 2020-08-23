@@ -33,3 +33,23 @@ class LoginForm(FlaskForm):
     password= PasswordField('Mot de passe', validators=[DataRequired("Votre mot de passe")])
     remember= BooleanField("Souvez-vous")
     submit = SubmitField('Connexion')
+    
+class Singup_client(FlaskForm):
+    nom= StringField('Nom', validators=[DataRequired("Completer nom"),  Length(min=2, max=32, message="Veuillez respecté les caractères")])
+    post_nom= StringField('Post-nom', validators=[DataRequired("Completer post nom"),  Length(min=2, max=32, message="Veuillez respecté les caractères")])
+    prenom= StringField('Prenom', validators=[DataRequired("Completer prenom"),  Length(min=2, max=32, message="Veuillez respecté les caractères")])
+    username= StringField('E-mail', validators=[DataRequired("Completer l'email"), Email('Adresse invalide')])
+    password= PasswordField('Mot de passe', validators=[DataRequired("Votre mot de passe"),  Length(min=6, max=32, message="6 à 32 caractères")])
+    submit = SubmitField('Connexion')
+    
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError("Cet utilisateur existe déjà")
+
+
+class Login_Client_Form(FlaskForm):
+    username= StringField('E-mail', validators=[DataRequired("Completer l'email"), Email('Adresse invalide')])
+    password= PasswordField('Mot de passe', validators=[DataRequired("Votre mot de passe")])
+    remember= BooleanField("Souvez-vous")
+    submit = SubmitField('Connexion')

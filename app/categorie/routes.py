@@ -62,6 +62,62 @@ def acivation_categorie(id):
       return redirect(url_for("categorie.index"))
 
 
+
+
+@categorie.route('/priorite/<int:id>', methods=['GET', 'POST'])
+@login_required
+@autorisation_super_admin
+def priorite_categorie(id):
+   #Vérfifcation ID
+   if id is None:
+      abort(404)
+      
+      
+   liste_de_priorite=[]
+   
+   #Categorie
+   categories=Categorie.query.filter_by(id=id).first_or_404()
+   #Priorité
+   priorite=Categorie.query.filter_by(priorite=True).all()
+   for prio in priorite:
+      i=prio.id
+      liste_de_priorite.insert(0,i)
+   nombre_de_cat_prio=len(liste_de_priorite)
+   #Message et type de notification
+   message=None
+   type_message=None
+   #Changement de la priorité de catégorie
+   if categories.priorite==None or categories.priorite==False:
+      if nombre_de_cat_prio == 4:
+         #Recuperation de la dernière categorie
+         liste_de_priorite.sort(reverse=True)
+         liste_derniere_cat=liste_de_priorite[0]
+         derniere_cat=Categorie.query.filter_by(id=liste_derniere_cat).first()
+         print(derniere_cat,'-----------------------dsqsd--------------')
+         
+         #desactivation en priorité de l derniere categorie
+         derniere_cat.priorite=False
+         categories.priorite=True
+      else:
+         categories.priorite=True
+      #Message de notification
+      message=f"Vous priorisez la catégorie {categories.nom.lower()}"
+      type_message=True
+              
+   else:
+      categories.statut = False
+      message=f"Vous dépriorisez la catégorie {categories.nom.lower()}"
+      type_message=False
+   db.session.commit()
+   
+   if type_message==True:
+      flash(f"{message}", "primary")
+      return redirect(url_for("categorie.index"))
+   else:
+      flash(f"{message}", "warning")
+      return redirect(url_for("categorie.index"))
+
+
 #Modification catégorie
 @categorie.route('/<int:id>', methods=['GET', 'POST'])
 @login_required

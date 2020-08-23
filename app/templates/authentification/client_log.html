@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form by Colorlib</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{{url_for('static', filename='login_client/fonts/material-icon/css/material-design-iconic-font.min.css')}}">
+    <link src="{{url_for('static', filename='bootstrap.min.css')}}" rel="stylesheet" id="bootstrap-css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{{url_for('static', filename='login_client/css/style.css')}}">
+</head>
+<body>
+
+    <div class="main">
+        <!-- Sing in  Form -->
+        <section class="sign-in">
+            <div class="container">
+                <div class="row">
+            
+
+                <div class="signin-content">
+                    <div class="signin-image">
+                        <figure><img src="{{url_for('static', filename='login_client/images/signin-image.jpg')}}" alt="sing up image"></figure>
+                        <a href="#" class="signup-image-link">Create an account</a>
+                    </div>
+                    <br>
+                    <div class="signin-form">
+                        <h2 class="form-title">Connexion</h2>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% with messages= get_flashed_messages(with_categories=true) %}
+                                {% if messages  %}
+                                {% for category, message in messages %}
+                                <div class="alert text-center alert-{{ category }}">
+                                    <b>{{ message }}</b>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                                {% endwith %}
+                            </div>
+                        </div>
+                        <br>
+
+                        <form method="POST" class="register-form" id="login-form">
+                            {{ form.csrf_token }}
+
+                            {%if var_non!=None%}
+                            <div class="form-group">
+                                <label for="name"><i class="zmdi zmdi-email material-icons-name"></i></label>
+                                {% if form.username.errors %}
+                                {{ form.username(placeholder="E-mail", readonly="")}}
+                                <i class="form-group__bar"></i>
+                                <div class="invalid-feedback">
+                                    {% for error in form.username.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.username(placeholder="E-mail", readonly="")}}
+                                <i class="form-group__bar"></i>
+                                {% endif %}
+                            </div>
+                            {%else%}
+                            <div class="form-group">
+                                <label for="name"><i class="zmdi zmdi-email material-icons-name"></i></label>
+                                {% if form.username.errors %}
+                                {{ form.username(placeholder="E-mail")}}
+                                <i class="form-group__bar"></i>
+                                <div class="invalid-feedback">
+                                    {% for error in form.username.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.username(placeholder="E-mail")}}
+                                <i class="form-group__bar"></i>
+                                {% endif %}
+                            </div>
+                            {%endif%}
+
+                            <div class="form-group">
+                                <label for="name"><i class="zmdi zmdi-lock material-icons-name"></i></label>
+                                {% if form.password.errors %}
+                                {{ form.password(placeholder="Mot de passe")}}
+                                <i class="form-group__bar"></i>
+                                <div class="invalid-feedback">
+                                    {% for error in form.password.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.password(placeholder="Mot de passe")}}
+                                <i class="form-group__bar"></i>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+                                {{ form.remember(class="agree-term")}}
+                                <label for="remember-me" class="label-agree-term"><span><span></span></span>Souvenez - vous</label>
+                            </div>
+
+                            <div class="form-group form-button">
+                                <input name="submit" type="submit" id="submit" class="form-submit" value="Connexion">
+                            </div>
+                        </form>
+                        <div class="social-login">
+                            <span class="social-label">Or login with</span>
+                            <ul class="socials">
+                                <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
+                                <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
+                                <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JS -->
+    <script src="{{url_for('static', filename='login_client/vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='login_client/js/main.js')}}"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

@@ -266,11 +266,13 @@ small {
   font-size: 1.75rem;
   letter-spacing: -1px;
   line-height: 30px; }
+  
   .title-1 span {
-    font-weight: 400;
-    font-family: "Dancing Script", cursive;
+    font-weight: 600;
+    font-family: ;
     text-transform: lowercase;
-    font-size: 60px; }
+    font-size: 41px;
+  }
 
 .subtitle {
   text-transform: uppercase;
